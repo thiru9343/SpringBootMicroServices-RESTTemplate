@@ -1,0 +1,29 @@
+// Code Coverage
+
+apply plugin: "jacoco"
+
+test {
+	jacoco {
+		excludes = ["app/configuration/*.java"]
+	}
+}
+
+task jacocoIntegrationTestReport(type: JacocoReport) {
+	sourceSets sourceSets.main
+	executionData integrationTest
+}
+
+integrationTest {
+	jacoco {
+		excludes = ["app/configuration/*.java"]
+	}
+}
+
+jacocoTestReport.doFirst{
+	classDirectories = files('build/classes/main/app')
+}
+
+jacocoIntegrationTestReport.doFirst{
+	classDirectories = files('build/classes/main/app')
+}
+
